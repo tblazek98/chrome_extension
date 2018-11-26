@@ -1,0 +1,12 @@
+{
+    "manifest_version": 2,
+    "name": "Test Weather Extension",
+    "description": "This shows weather data",
+    "version": "1",
+    "author": "Timothy Blazek",
+    "permissions": ["geolocation"],
+    "browser_action": {
+        "default_title": "Weather",
+        "default_popup": "popup.html"
+    }
+}
