@@ -1,15 +1,17 @@
 <!doctype html>
 <html>
     <head>
-        <title>Test</title>
+        <title>Weather</title>
+        <link rel="stylesheet" href="styles/popup.css">
     </head>
     <body>
         <div id="informationBlock">
-            <div>Current Temperature: <span id="currTemp"></span></div>
-            <div>High: <span id="highTemp"></span></div>
-            <div>Low: <span id="lowTemp"></span></div>
-            <div>Latitude: <span id="latitude"></span></div>
-            <div>Longitude: <span id="longitude"></span></div>
+            <img class="weatherPic" id="weatherPic">
+            <div class="information">
+                <div>Current Temperature: <span id="currTemp"></span></div>
+                <div>Description: <span id="weatherDescription"></span></div>
+                <div>City: <span id="city"></span></div>
+            </div>
         </div>
         <div id="errorShow"></div>
         <script src="scripts/popup.js"></script>
