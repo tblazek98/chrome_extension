@@ -28,12 +28,16 @@ function getWeather(position){
         high.innerHTML = Math.round(tempData["temp_max"]);
     }
     xhttp.send();
-
+    //$.getJSON("https://api.darksky.net/forecast/57555d4fda958c3163e004edc806b1fd/" + position.coords.latitude + "," + position.coords.longitude, function(forecast){ console.log(forecast) });
     var fhttp = new XMLHttpRequest();
-    fhttp.open("GET", "https://api.openweathermap.org/data/2.5/forecast?lat=" + position.coords.latitude + "&lon=" + position.coords.longitude + "&APPID=7e490e770b74fb92f3cdd351664a1c22&units=Imperial", true);
+    fhttp.open("GET", "https://cors.io?https://api.darksky.net/forecast/57555d4fda958c3163e004edc806b1fd/" + position.coords.latitude + "," + position.coords.longitude, true);
     fhttp.onload = function() {
         var data = JSON.parse(fhttp.responseText);
-        tempData = data["list"];
+        console.log("Temperature: " + data["currently"]["temperature"]);
+        console.log("Feels like " + data["currently"]["apparentTemperature"]);
+        console.log("High: " + data["daily"]["data"][0]["temperatureHigh"]);
+        console.log("Low: " + data["daily"]["data"][0]["temperatureLow"]);
+        /**
         var d = new Date(0);
         for (var i=0; i< tempData.length; i++){
             d.setUTCSeconds(tempData[i]["dt"]);
@@ -42,6 +46,7 @@ function getWeather(position){
             console.log(tempData[i]["temp_max"]);
             console.log("");
         }
+        **/
     }
     fhttp.send();
 
