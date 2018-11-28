@@ -36,9 +36,12 @@ function getWeather(position){
         description.innerHTML = current["summary"];
         highTemp.innerHTML = "H " + Math.round(daily[0]["temperatureHigh"]) + deg+ " /";
         lowTemp.innerHTML = "L " + Math.round(daily[0]["temperatureLow"]) + deg;
-        precip.innerHTML = "Chance of " + daily[0]["precipType"] + ": " + (daily[0]["precipProbability"] * 100) + "%";
+        if (daily[0]["precipProbability"] != 0){
+            precip.innerHTML = "Chance of " + daily[0]["precipType"] + ": " + (daily[0]["precipProbability"] * 100) + "%";
+        } else {
+            precip.innerHTML = "No chance of precipitation";
+        }
         dailySum.innerHTML = daily[0]["summary"];
-
         var wIcon = new weatherIcon();
         wIcon.createIcon(current["icon"], "weatherIcon");
         var hourly = data["hourly"]["data"];
@@ -105,10 +108,8 @@ function weatherIcon(){
             var figcap = document.createElement("p");
             var hourDiv = document.createElement("div");
             hourDiv.setAttribute("class", "dailyWeatherHour");
-            //figcap.setAttribute("class", "dailyWeatherHour");
             figcap.innerHTML = returnTime(d.getHours());
             var topDiv = document.createElement("div");
-            //topDiv.appendChild(figcap);
             topDiv.innerHTML = returnTime(d.getHours());
             var midDiv = document.createElement("div");
             midDiv.appendChild(arr[i]);
