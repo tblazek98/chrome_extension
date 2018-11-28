@@ -47,6 +47,7 @@ function getWeather(position){
             canvas = document.createElement("canvas");
             canvas.setAttribute("id", hourly[i]["icon"]);
             canvas.setAttribute("value", hourly[i]["time"]);
+            canvas.setAttribute("temp", Math.round(hourly[i]["temperature"]));
             canvas.setAttribute("width", "128");
             canvas.setAttribute("height", "128");
             canvas.setAttribute("class", "weatherPic");
@@ -102,10 +103,21 @@ function weatherIcon(){
                 div.appendChild(p);
             }
             var figcap = document.createElement("p");
-            figcap.setAttribute("class", "dailyWeather");
+            var hourDiv = document.createElement("div");
+            hourDiv.setAttribute("class", "dailyWeatherHour");
+            //figcap.setAttribute("class", "dailyWeatherHour");
             figcap.innerHTML = returnTime(d.getHours());
-            div.appendChild(figcap);
-            div.appendChild(arr[i]);
+            var topDiv = document.createElement("div");
+            //topDiv.appendChild(figcap);
+            topDiv.innerHTML = returnTime(d.getHours());
+            var midDiv = document.createElement("div");
+            midDiv.appendChild(arr[i]);
+            var botDiv = document.createElement("div");
+            botDiv.innerHTML = "<span>" + arr[i].getAttribute("temp") + deg + "</span>";
+            hourDiv.appendChild(topDiv);
+            hourDiv.appendChild(midDiv);
+            hourDiv.appendChild(botDiv);
+            div.appendChild(hourDiv);
             recent=d.getDate();
         }
         pushDaily(div, recent);
