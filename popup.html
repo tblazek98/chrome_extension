@@ -2,18 +2,31 @@
 <html>
     <head>
         <title>Weather</title>
+        <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
         <link rel="stylesheet" href="styles/popup.css">
     </head>
     <body>
         <div id="informationBlock">
-            <img class="weatherPic" id="weatherPic">
-            <div class="information">
-                <div>Current Temperature: <span id="currTemp"></span></div>
-                <div>Description: <span id="weatherDescription"></span></div>
-                <div>City: <span id="city"></span></div>
+            <!--<img class="weatherPic" id="weatherPic">-->
+            <div class="split left">
+                <div class="centered">
+                    <canvas id="weatherIcon" class="weatherIcon" width="128" height="128"></canvas>
+                    <div><span id="weatherDescription"></span></div>
+                </div>
+            </div>
+            <div class="information split right">
+                <div style="font-size:300%;"><span id="currTemp"></span></div>
+                <div>Feels like <span id="feelsTemp"></span></div>
+                <div><span id="highTemp"></span> <span id="lowTemp"></span></div>
+                <div><span id="precip"></span></div>
+            </div>
+            <div class="split bottom">
+                <div><span id="dailySum"></span></div>
+                <div id="hourlyData"></div>
             </div>
         </div>
         <div id="errorShow"></div>
         <script src="scripts/popup.js"></script>
+        <script src="scripts/skycons.js"></script>
     </body>
 </html>

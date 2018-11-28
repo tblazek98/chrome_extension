@@ -1,9 +1,51 @@
 body {
-    min-width:300px;
+    min-width:250px;
+    min-height:250px;
     background-color:powderblue;
+    font-family: 'Quicksand', sans-serif;
+}
+.weatherPic {
+    white-space:nowrap;
+    overflow:hidden;
+    display: inline-block;
 }
 
-.weatherPic {
-    float:left;
-    padding-right:10px;
+.weatherIcon {
+    width:80%;
+    height:auto;
+}
+.centered {
+    position:absolute;
+    left:10%;
+    text-align:center;
+
+}
+.information {
+    height:100%;
+    vertical-align:middle;
+    text-align:center;
+}
+.dailyWeather {
+    white-space:nowrap;
+    overflow:hidden;
+    display: inline-block;
+}
+.split {
+    height: 45%;
+    width:50%;
+    padding-top:15px;
+    position:fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+}
+.left {
+    left: 0;
+}
+.right {
+    right: 0;
+}
+.bottom {
+    width:100%;
+    top:50%;
 }
