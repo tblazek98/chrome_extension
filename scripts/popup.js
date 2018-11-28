@@ -58,8 +58,21 @@ function getWeather(position){
             canvas.style.height = "auto";
             arr_canvas[i] = canvas;
         }
+        var daily = data["daily"]["data"];
+        var arr_daily = [];
+        for (var i=0; i<daily.length; i++){
+            canvas = document.createElement("canvas");
+            canvas.setAttribute("id", daily[i]["icon"]);
+            canvas.setAttribute("width", "128");
+            canvas.setAttribute("height", "128");
+            canvas.setAttribute("class", "weatherPic");
+            canvas.style.width = "30px";
+            canvas.style.height = "auto";
+            canvas.style.display = "inline-block";
+            arr_daily[i] = [ daily[i]["time"], canvas, daily[i]["temperatureLow"], daily[i]["temperatureHigh"] ];
+        }
         var arr_icons = new weatherIcon();
-        arr_icons.changeIcon(arr_canvas);
+        arr_icons.changeIcon(arr_canvas, arr_daily);
     }
     fhttp.send();
 }
@@ -77,33 +90,53 @@ function errorHandle(message){
 function weatherIcon(){
     this.createIcon = function(icon, id){
         this.skycons = new Skycons({"color": "blue"});
-        console.log(icon);
-        console.log(id);
         this.skycons.add(id, icon);
         this.skycons.play();
     }
-    this.changeIcon = function(arr){
+    this.changeIcon = function(arr, daily){
         this.icons = new Skycons();
         for (i=0; i<arr.length; i++){
             this.icons.add(arr[i], arr[i].id);
         }
+        for (i=0; i<daily.length; i++){
+            this.icons.add(daily[i][1], daily[i][1].id);
+        }
         this.icons.play();
+        //this.icons.pause();
         var recent = 0;
-        var div = document.createElement("div");
+        var j=0;
         for (i=0; i< arr.length; i++){
             var d = new Date((parseInt(arr[i].getAttribute("value")))*1000);
-            if (i==0){
-                var p = document.createElement("p");
-                p.innerHTML = weekday[d.getDay()] ;
-                div.appendChild(p);
-                recent=d.getDate();
-            }
-            if (d.getDate() != recent) {
-                pushDaily(div, recent);
+            if ((d.getDate() != recent) || (i == 0)) {
+                if (i!=0){
+                    pushDaily(collectionHoursDiv, div, recent);
+                } else {
+                    recent=d.getDate();
+                }
                 div = document.createElement("div");
+                var collectionHoursDiv = document.createElement("div");
+                var headerDiv = document.createElement("div");
                 var p = document.createElement("p");
+                p.style.display = 'inline-block';
+                p.style.float = "left";
+                p.style.width = "33%";
+                p.style.textAlign = "left";
                 p.innerHTML = weekday[d.getDay()];
-                div.appendChild(p);
+                var iconDiv = document.createElement("div");
+                iconDiv.style.float = "left";
+                iconDiv.style.width = "33%";
+                iconDiv.style.textAlign = "center";
+                iconDiv.appendChild(daily[j][1]);
+                var p2 = document.createElement("p");
+                p2.innerHTML = "<span>H " + Math.round(daily[j][3]) + deg + " / L " + Math.round(daily[j][2]) + deg + "</span>";
+                p2.style.float = "left";
+                p2.style.width = "33%";
+                p2.style.textAlign = "right";
+                headerDiv.appendChild(p);
+                headerDiv.append(iconDiv);
+                headerDiv.append(p2);
+                div.appendChild(headerDiv);
+                j = j + 1;
             }
             var figcap = document.createElement("p");
             var hourDiv = document.createElement("div");
@@ -118,13 +151,15 @@ function weatherIcon(){
             hourDiv.appendChild(topDiv);
             hourDiv.appendChild(midDiv);
             hourDiv.appendChild(botDiv);
-            div.appendChild(hourDiv);
+            collectionHoursDiv.appendChild(hourDiv);
             recent=d.getDate();
         }
-        pushDaily(div, recent);
+        pushDaily(collectionHoursDiv, div, recent);
     }
 }
-function pushDaily(div, recent){
+function pushDaily(collection, div, recent){
+    collection.setAttribute("class", "collectionDailyWeather");
+    div.appendChild(collection);
     div.setAttribute("id", recent);
     div.setAttribute("class", "dailyWeather");
     document.getElementById("hourlyData").appendChild(div);
