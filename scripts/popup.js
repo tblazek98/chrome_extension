@@ -13,6 +13,8 @@ var eBlock = document.getElementById('errorShow');
 var deg = "&#176";
 
 var weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+
 getLocation();
 
 
@@ -54,8 +56,6 @@ function getWeather(position){
             canvas.setAttribute("width", "128");
             canvas.setAttribute("height", "128");
             canvas.setAttribute("class", "weatherPic");
-            canvas.style.width = "30px";
-            canvas.style.height = "auto";
             arr_canvas[i] = canvas;
         }
         var daily = data["daily"]["data"];
@@ -66,9 +66,6 @@ function getWeather(position){
             canvas.setAttribute("width", "128");
             canvas.setAttribute("height", "128");
             canvas.setAttribute("class", "weatherPic");
-            canvas.style.width = "30px";
-            canvas.style.height = "auto";
-            canvas.style.display = "inline-block";
             arr_daily[i] = [ daily[i]["time"], canvas, daily[i]["temperatureLow"], daily[i]["temperatureHigh"] ];
         }
         var arr_icons = new weatherIcon();
@@ -102,41 +99,26 @@ function weatherIcon(){
             this.icons.add(daily[i][1], daily[i][1].id);
         }
         this.icons.play();
-        //this.icons.pause();
         var recent = 0;
         var j=0;
-        for (i=0; i< arr.length; i++){
+        count = 0;
+        //for (i=0; i< arr.length; i++){
+        for (i=0; (i< arr.length)&&(count<24); i++){
             var d = new Date((parseInt(arr[i].getAttribute("value")))*1000);
-            if ((d.getDate() != recent) || (i == 0)) {
+            //if ((d.getDate() != recent) || (i == 0)) {
+            if ((count>23) || (i == 0)) {
                 if (i!=0){
-                    pushDaily(collectionHoursDiv, div, recent);
+                    pushDaily(collectionHoursDiv, div, recent, true);
                 } else {
                     recent=d.getDate();
                 }
                 div = document.createElement("div");
                 var collectionHoursDiv = document.createElement("div");
-                var headerDiv = document.createElement("div");
-                var p = document.createElement("p");
-                p.style.display = 'inline-block';
-                p.style.float = "left";
-                p.style.width = "33%";
-                p.style.textAlign = "left";
-                p.innerHTML = weekday[d.getDay()];
-                var iconDiv = document.createElement("div");
-                iconDiv.style.float = "left";
-                iconDiv.style.width = "33%";
-                iconDiv.style.textAlign = "center";
-                iconDiv.appendChild(daily[j][1]);
-                var p2 = document.createElement("p");
-                p2.innerHTML = "<span>H " + Math.round(daily[j][3]) + deg + " / L " + Math.round(daily[j][2]) + deg + "</span>";
-                p2.style.float = "left";
-                p2.style.width = "33%";
-                p2.style.textAlign = "right";
-                headerDiv.appendChild(p);
-                headerDiv.append(iconDiv);
-                headerDiv.append(p2);
-                div.appendChild(headerDiv);
+                createDailyHeader(div, d.getDay(), daily[j][1], daily[j][2], daily[j][3]);
                 j = j + 1;
+                if (i != 0){
+                    break;
+                }
             }
             var figcap = document.createElement("p");
             var hourDiv = document.createElement("div");
@@ -153,17 +135,29 @@ function weatherIcon(){
             hourDiv.appendChild(botDiv);
             collectionHoursDiv.appendChild(hourDiv);
             recent=d.getDate();
+            count = count + 1;
         }
-        pushDaily(collectionHoursDiv, div, recent);
+        pushDaily(collectionHoursDiv, div, recent, true);
+
+        for(; j<daily.length; j++){
+            var d = new Date(daily[j][0]*1000);
+            div = document.createElement("div");
+            createDailyHeader(div, d.getDay(), daily[j][1], daily[j][2], daily[j][3]);
+            var collection = document.createElement("div");
+            pushDaily(collection, div, d.getDate(), false);
+
+        }
     }
 }
-function pushDaily(collection, div, recent){
+function pushDaily(collection, div, recent, display){
     collection.setAttribute("class", "collectionDailyWeather");
     div.appendChild(collection);
     div.setAttribute("id", recent);
     div.setAttribute("class", "dailyWeather");
     document.getElementById("hourlyData").appendChild(div);
-    document.getElementById("hourlyData").appendChild(document.createElement("br"));
+    if (display == true){
+        document.getElementById("hourlyData").appendChild(document.createElement("br"));
+    }
 };
 function returnTime(hour) {
     if (hour==0){
@@ -176,3 +170,19 @@ function returnTime(hour) {
         return (hour-12) + " PM";
     }
 };
+function createDailyHeader(div, day, icon, low, high){
+    var headerDiv = document.createElement("div");
+    var p = document.createElement("p");
+    p.setAttribute("class", "dailyLeft");
+    p.innerHTML = weekday[day];
+    var iconDiv = document.createElement("div");
+    iconDiv.setAttribute("class", "dailyCenter");
+    iconDiv.appendChild(icon);
+    var p2 = document.createElement("p");
+    p2.setAttribute("class", "dailyRight");
+    p2.innerHTML = "<span>H " + Math.round(high) + deg + " / L " + Math.round(low) + deg + "</span>";
+    headerDiv.appendChild(p);
+    headerDiv.appendChild(iconDiv);
+    headerDiv.appendChild(p2);
+    div.appendChild(headerDiv);
+}

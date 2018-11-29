@@ -44,6 +44,8 @@ body {
     white-space:nowrap;
     overflow:hidden;
     display: inline-block;
+    width: 30px;
+    height: auto;
 }
 
 .weatherIcon {
@@ -104,4 +106,20 @@ body {
     width:100%;
     top:48%;
     height:50%;
+}
+.dailyLeft {
+    display: 'inline-block';
+    float: left;
+    width: 33%;
+    text-align: left;
+}
+.dailyCenter {
+    float: left;
+    width: 33%;
+    text-align: center;
+}
+.dailyRight {
+    float: left;
+    width: 33%;
+    text-align: left;
 }
