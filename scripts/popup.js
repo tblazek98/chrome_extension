@@ -1,3 +1,5 @@
+var API_KEY = '57555d4fda958c3163e004edc806b1fd';
+
 var description = document.getElementById('weatherDescription');
 var curr = document.getElementById('currTemp');
 var feels = document.getElementById('feelsTemp');
@@ -28,7 +30,7 @@ function getLocation (){
 }
 function getWeather(position){
     var fhttp = new XMLHttpRequest();
-    fhttp.open("GET", "https://cors.io?https://api.darksky.net/forecast/57555d4fda958c3163e004edc806b1fd/" + position.coords.latitude + "," + position.coords.longitude + "?exclude=minutely", true);
+    fhttp.open("GET", "https://cors.io?https://api.darksky.net/forecast/" + API_KEY + "/" + position.coords.latitude + "," + position.coords.longitude + "?exclude=minutely", true);
     fhttp.onload = function() {
         var data = JSON.parse(fhttp.responseText);
         current = data["currently"];
@@ -102,10 +104,8 @@ function weatherIcon(){
         var recent = 0;
         var j=0;
         count = 0;
-        //for (i=0; i< arr.length; i++){
         for (i=0; (i< arr.length)&&(count<24); i++){
             var d = new Date((parseInt(arr[i].getAttribute("value")))*1000);
-            //if ((d.getDate() != recent) || (i == 0)) {
             if ((count>23) || (i == 0)) {
                 if (i!=0){
                     pushDaily(collectionHoursDiv, div, recent, true);
