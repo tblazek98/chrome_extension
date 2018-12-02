@@ -1,6 +1,6 @@
-# chrome_extension
+# Overview
 This is a chrome extension to display the weather for the next week.
-It uses the Dark Sky API, to get the weather data and it uses base-line
+It uses the Dark Sky API, to get the weather data and it uses raw
 javascript, css, and html to implement the front-end. 
 
 ## Installation
@@ -16,3 +16,6 @@ I used the [Dark Sky API](http://darksky.net/dev) for my weather data.
 
 The Dark Sky API is not compliant with CORS, so I used [cors.io](https://cors.io)
 which allows me to pass a link and it returns the API from Dark Sky.
+
+This website also uses [skycons](https://github.com/darkskyapp/skycons) to show the icons
+in the weather app and for the animation.

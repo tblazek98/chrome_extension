@@ -1,4 +1,4 @@
-var API_KEY = '';
+var API_KEY = '57555d4fda958c3163e004edc806b1fd';
 
 var description = document.getElementById('weatherDescription');
 var curr = document.getElementById('currTemp');
