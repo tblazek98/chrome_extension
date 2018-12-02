@@ -12,7 +12,7 @@ Create an account at Dark Sky (link below), and get an API key. Then
 change `API_KEY` in `scripts/popup.js` in line 1 to match your API key.
 
 ## Source
-I used the (Dark Sky API)[http://darksky.net/dev] for my weather data.
+I used the [http://darksky.net/dev](Dark Sky API) for my weather data.
 
-The Dark Sky API is not compliant with CORS, so I used (cors.io)[https://cors.io]
+The Dark Sky API is not compliant with CORS, so I used [https://cors.io](cors.io)
 which allows me to pass a link and it returns the API from Dark Sky.
