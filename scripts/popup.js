@@ -21,9 +21,9 @@ getLocation();
 
 
 function getLocation (){
+    errorHandle("");
     if (navigator.geolocation) {
-        notError();
-        navigator.geolocation.getCurrentPosition(getWeather);
+        navigator.geolocation.getCurrentPosition(getWeather, errorHandle)
     } else {
         errorHandle("Geolocation is not supported by this browser");
     }
@@ -72,6 +72,10 @@ function getWeather(position){
         }
         var arr_icons = new weatherIcon();
         arr_icons.changeIcon(arr_canvas, arr_daily);
+        notError();
+    }
+    fhttp.onerror = function() {
+        errorHandle("Unable to reach weather data");
     }
     fhttp.send();
 }
@@ -81,9 +85,12 @@ function notError(){
     eBlock.style.visibility = 'hidden';
 }
 function errorHandle(message){
+    if (typeof message === 'object') {
+        message = "No internet connection";
+    }
     iBlock.style.visibility = 'hidden';
     eBlock.style.visibility = 'visible';
-    eBlock.innerHtml = message;
+    eBlock.innerHTML = message;
 }
 
 function weatherIcon(){

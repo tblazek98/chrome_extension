@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
-    "name": "Test Weather Extension",
-    "description": "This shows weather data",
+    "name": "Weather Extension",
+    "description": "This shows local weather data",
     "version": "1",
     "author": "Timothy Blazek",
     "permissions": ["geolocation"],
