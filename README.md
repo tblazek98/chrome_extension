@@ -19,3 +19,6 @@ which allows me to pass a link and it returns the API from Dark Sky.
 
 This website also uses [skycons](https://github.com/darkskyapp/skycons) to show the icons
 in the weather app and for the animation.
+
+I used Google's font [Quicksand]("https://fonts.googleapis.com/css?family=Quicksand") for
+my default font choice. I downloaded this locally so I would be working with a static library.
